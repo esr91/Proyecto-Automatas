@@ -1,0 +1,353 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DIVIDE
+    RPAREN
+    MAS
+    MAYOR
+    EMPTY
+    NUMBER
+    MENOS
+    LPAREN
+    POR
+
+Grammar
+
+Rule 0     S' -> emoticon
+Rule 1     emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
+Rule 2     emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT ACORCH CCORCH
+Rule 3     paramFor1 -> asignaciones
+Rule 4     paramFor1 -> empty
+Rule 5     asignaciones -> asignacion asignaciones
+Rule 6     asignaciones -> asignacion
+Rule 7     asignacion -> ID IGUAL ID
+Rule 8     comparacionesRet -> comparacionRet
+Rule 9     comparacionRet -> ID MENOR ID
+Rule 10    paramFor3 -> ID
+Rule 11    emoticon -> RESERVADOS ids PUNTOCOMA
+Rule 12    pReservadas -> INT
+Rule 13    pReservadas -> DOUBLE
+Rule 14    pReservadas -> FLOAT
+Rule 15    ids -> ID COMA ids
+Rule 16    ids -> ID
+Rule 17    emoticon -> NUM
+Rule 18    emoticon -> ID
+Rule 19    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ACORCH               : 2
+APARENT              : 1 2
+CCORCH               : 2
+COMA                 : 15
+CPARENT              : 1 2
+DIVIDE               : 
+DOUBLE               : 13
+EMPTY                : 
+FLOAT                : 14
+FOR                  : 1 2
+ID                   : 7 7 9 9 10 15 16 18
+IGUAL                : 7
+INT                  : 12
+LPAREN               : 
+MAS                  : 
+MAYOR                : 
+MENOR                : 9
+MENOS                : 
+NUM                  : 17
+NUMBER               : 
+POR                  : 
+PUNTOCOMA            : 1 1 2 2 11
+RESERVADOS           : 11
+RPAREN               : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+asignacion           : 5 6
+asignaciones         : 3 5
+comparacionRet       : 8
+comparacionesRet     : 1 2
+emoticon             : 0
+empty                : 4
+ids                  : 11 15
+pReservadas          : 
+paramFor1            : 1 2
+paramFor3            : 1 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . emoticon
+    (1) emoticon -> . FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
+    (2) emoticon -> . FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT ACORCH CCORCH
+    (11) emoticon -> . RESERVADOS ids PUNTOCOMA
+    (17) emoticon -> . NUM
+    (18) emoticon -> . ID
+
+    FOR             shift and go to state 1
+    RESERVADOS      shift and go to state 4
+    NUM             shift and go to state 5
+    ID              shift and go to state 2
+
+    emoticon                       shift and go to state 3
+
+state 1
+
+    (1) emoticon -> FOR . APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
+    (2) emoticon -> FOR . APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT ACORCH CCORCH
+
+    APARENT         shift and go to state 6
+
+
+state 2
+
+    (18) emoticon -> ID .
+
+    $end            reduce using rule 18 (emoticon -> ID .)
+
+
+state 3
+
+    (0) S' -> emoticon .
+
+
+
+state 4
+
+    (11) emoticon -> RESERVADOS . ids PUNTOCOMA
+    (15) ids -> . ID COMA ids
+    (16) ids -> . ID
+
+    ID              shift and go to state 8
+
+    ids                            shift and go to state 7
+
+state 5
+
+    (17) emoticon -> NUM .
+
+    $end            reduce using rule 17 (emoticon -> NUM .)
+
+
+state 6
+
+    (1) emoticon -> FOR APARENT . paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
+    (2) emoticon -> FOR APARENT . paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT ACORCH CCORCH
+    (3) paramFor1 -> . asignaciones
+    (4) paramFor1 -> . empty
+    (5) asignaciones -> . asignacion asignaciones
+    (6) asignaciones -> . asignacion
+    (19) empty -> .
+    (7) asignacion -> . ID IGUAL ID
+
+    PUNTOCOMA       reduce using rule 19 (empty -> .)
+    ID              shift and go to state 9
+
+    empty                          shift and go to state 11
+    asignaciones                   shift and go to state 12
+    asignacion                     shift and go to state 13
+    paramFor1                      shift and go to state 10
+
+state 7
+
+    (11) emoticon -> RESERVADOS ids . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 14
+
+
+state 8
+
+    (15) ids -> ID . COMA ids
+    (16) ids -> ID .
+
+    COMA            shift and go to state 15
+    PUNTOCOMA       reduce using rule 16 (ids -> ID .)
+
+
+state 9
+
+    (7) asignacion -> ID . IGUAL ID
+
+    IGUAL           shift and go to state 16
+
+
+state 10
+
+    (1) emoticon -> FOR APARENT paramFor1 . PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
+    (2) emoticon -> FOR APARENT paramFor1 . PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT ACORCH CCORCH
+
+    PUNTOCOMA       shift and go to state 17
+
+
+state 11
+
+    (4) paramFor1 -> empty .
+
+    PUNTOCOMA       reduce using rule 4 (paramFor1 -> empty .)
+
+
+state 12
+
+    (3) paramFor1 -> asignaciones .
+
+    PUNTOCOMA       reduce using rule 3 (paramFor1 -> asignaciones .)
+
+
+state 13
+
+    (5) asignaciones -> asignacion . asignaciones
+    (6) asignaciones -> asignacion .
+    (5) asignaciones -> . asignacion asignaciones
+    (6) asignaciones -> . asignacion
+    (7) asignacion -> . ID IGUAL ID
+
+    PUNTOCOMA       reduce using rule 6 (asignaciones -> asignacion .)
+    ID              shift and go to state 9
+
+    asignacion                     shift and go to state 13
+    asignaciones                   shift and go to state 18
+
+state 14
+
+    (11) emoticon -> RESERVADOS ids PUNTOCOMA .
+
+    $end            reduce using rule 11 (emoticon -> RESERVADOS ids PUNTOCOMA .)
+
+
+state 15
+
+    (15) ids -> ID COMA . ids
+    (15) ids -> . ID COMA ids
+    (16) ids -> . ID
+
+    ID              shift and go to state 8
+
+    ids                            shift and go to state 19
+
+state 16
+
+    (7) asignacion -> ID IGUAL . ID
+
+    ID              shift and go to state 20
+
+
+state 17
+
+    (1) emoticon -> FOR APARENT paramFor1 PUNTOCOMA . comparacionesRet PUNTOCOMA paramFor3 CPARENT
+    (2) emoticon -> FOR APARENT paramFor1 PUNTOCOMA . comparacionesRet PUNTOCOMA paramFor3 CPARENT ACORCH CCORCH
+    (8) comparacionesRet -> . comparacionRet
+    (9) comparacionRet -> . ID MENOR ID
+
+    ID              shift and go to state 22
+
+    comparacionesRet               shift and go to state 23
+    comparacionRet                 shift and go to state 21
+
+state 18
+
+    (5) asignaciones -> asignacion asignaciones .
+
+    PUNTOCOMA       reduce using rule 5 (asignaciones -> asignacion asignaciones .)
+
+
+state 19
+
+    (15) ids -> ID COMA ids .
+
+    PUNTOCOMA       reduce using rule 15 (ids -> ID COMA ids .)
+
+
+state 20
+
+    (7) asignacion -> ID IGUAL ID .
+
+    ID              reduce using rule 7 (asignacion -> ID IGUAL ID .)
+    PUNTOCOMA       reduce using rule 7 (asignacion -> ID IGUAL ID .)
+
+
+state 21
+
+    (8) comparacionesRet -> comparacionRet .
+
+    PUNTOCOMA       reduce using rule 8 (comparacionesRet -> comparacionRet .)
+
+
+state 22
+
+    (9) comparacionRet -> ID . MENOR ID
+
+    MENOR           shift and go to state 24
+
+
+state 23
+
+    (1) emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet . PUNTOCOMA paramFor3 CPARENT
+    (2) emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet . PUNTOCOMA paramFor3 CPARENT ACORCH CCORCH
+
+    PUNTOCOMA       shift and go to state 25
+
+
+state 24
+
+    (9) comparacionRet -> ID MENOR . ID
+
+    ID              shift and go to state 26
+
+
+state 25
+
+    (1) emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA . paramFor3 CPARENT
+    (2) emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA . paramFor3 CPARENT ACORCH CCORCH
+    (10) paramFor3 -> . ID
+
+    ID              shift and go to state 27
+
+    paramFor3                      shift and go to state 28
+
+state 26
+
+    (9) comparacionRet -> ID MENOR ID .
+
+    PUNTOCOMA       reduce using rule 9 (comparacionRet -> ID MENOR ID .)
+
+
+state 27
+
+    (10) paramFor3 -> ID .
+
+    CPARENT         reduce using rule 10 (paramFor3 -> ID .)
+
+
+state 28
+
+    (1) emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 . CPARENT
+    (2) emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 . CPARENT ACORCH CCORCH
+
+    CPARENT         shift and go to state 29
+
+
+state 29
+
+    (1) emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT .
+    (2) emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT . ACORCH CCORCH
+
+    $end            reduce using rule 1 (emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT .)
+    ACORCH          shift and go to state 30
+
+
+state 30
+
+    (2) emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT ACORCH . CCORCH
+
+    CCORCH          shift and go to state 31
+
+
+state 31
+
+    (2) emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT ACORCH CCORCH .
+
+    $end            reduce using rule 2 (emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT ACORCH CCORCH .)
+

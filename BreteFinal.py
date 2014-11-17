@@ -118,7 +118,7 @@ def p_comparacionesRet(p):	#Estas devuelven lo quese debe imprimir para hacerlo 
 #######COMPARACION######ESTAN LAS QUE IMPRIMEN EN SI MISMAS Y LAS QUE IMPRIMEN EN SUS PADRES
 def p_comparacionRet(p):#DEVUELVE A SU PAADRE QUE IMPRIMIR
 	'comparacionRet : ID MENOR ID'
-	#P[0] = "hace la compa"
+	p[0] = (p[1]+" menor que "+p[3])
 '''
 ######OPBOOLEANO#########
 def p_opbooleano(p):
