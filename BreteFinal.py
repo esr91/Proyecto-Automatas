@@ -171,8 +171,6 @@ def p_empty(p):
 	p[0]='empty'
 	pass
 	
-    
-	
 def p_error(p):
     if p:
         print("Error de sintaxis en '%s'" % p.value)
