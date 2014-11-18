@@ -5,9 +5,9 @@ _tabversion = '3.2'
 
 _lr_method = 'LALR'
 
-_lr_signature = b'\x95a\xbe\xb6\xb0\xfc\xe7\xb3K0R\xcb\xd1\x02H\x05'
+_lr_signature = b'\x91\x97\xd0\xab\x8eu\x8be\x9a\xbe\xc6\x97:\x04\xado'
     
-_lr_action_items = {'IGUAL':([9,],[16,]),'ACORCH':([29,],[30,]),'COMA':([8,],[15,]),'APARENT':([1,],[6,]),'ID':([0,4,6,13,15,16,17,20,24,25,],[2,8,9,9,8,20,22,-7,26,27,]),'PUNTOCOMA':([6,7,8,10,11,12,13,18,19,20,21,23,26,],[-19,14,-16,17,-4,-3,-6,-5,-15,-7,-8,25,-9,]),'CCORCH':([30,],[31,]),'$end':([2,3,5,14,29,31,],[-18,0,-17,-11,-1,-2,]),'MENOR':([22,],[24,]),'FOR':([0,],[1,]),'CPARENT':([27,28,],[-10,29,]),'RESERVADOS':([0,],[4,]),'NUM':([0,],[5,]),}
+_lr_action_items = {'ACORCH':([9,76,],[14,-9,]),'POR':([19,21,22,36,37,51,52,54,57,58,73,],[-38,39,-37,39,39,-39,39,39,39,39,39,]),'MENOS':([19,21,22,36,37,51,52,54,57,58,59,69,71,73,74,],[-38,41,-37,41,41,-39,41,41,41,41,71,74,77,41,79,]),'NUM':([0,13,17,20,38,39,40,41,42,43,49,50,53,60,61,62,63,64,65,66,67,68,],[1,22,22,22,22,-34,-36,-33,-35,-32,22,22,22,-26,-30,-24,-31,-25,-28,-27,22,-29,]),'AND':([19,22,51,52,57,],[-38,-37,-39,-40,61,]),'RESERVADOS':([0,2,5,6,14,15,19,21,22,23,29,36,45,51,52,54,58,],[3,-8,-6,-5,25,31,-38,-16,-37,25,31,-17,-7,-39,-40,-14,-15,]),'MENOR':([19,22,51,52,57,],[-38,-37,-39,-40,62,]),'OR':([19,22,51,52,57,],[-38,-37,-39,-40,63,]),'$end':([1,2,4,5,6,7,8,18,19,21,22,36,45,51,52,],[-45,-8,-1,-6,-5,0,-46,-42,-38,-16,-37,-17,-7,-39,-40,]),'IGUALIG':([19,22,51,52,57,],[-38,-37,-39,-40,65,]),'PUNTOCOMA':([11,12,15,19,22,28,29,30,33,34,35,47,51,52,54,55,56,58,73,],[-44,18,-47,-38,-37,-10,-13,-11,50,-44,-43,-12,-39,-40,-14,59,-18,-15,-19,]),'MAS':([19,21,22,36,37,51,52,54,57,58,59,69,72,73,75,],[-38,43,-37,43,43,-39,43,43,43,43,72,75,78,43,80,]),'MENORIG':([19,22,51,52,57,],[-38,-37,-39,-40,64,]),'COMA':([11,34,],[16,16,]),'MODULO':([19,21,22,36,37,51,52,54,57,58,73,],[-38,40,-37,40,40,-39,40,40,40,40,40,]),'CCORCH':([2,5,6,14,19,21,22,23,24,27,36,44,45,51,52,],[-8,-6,-5,-47,-38,-16,-37,-2,45,-4,-17,-3,-7,-39,-40,]),'DIVIDE':([19,21,22,36,37,51,52,54,57,58,73,],[-38,42,-37,42,42,-39,42,42,42,42,42,]),'APARENT':([10,13,17,20,38,39,40,41,42,43,49,50,53,60,61,62,63,64,65,66,67,68,],[15,20,20,20,20,-34,-36,-33,-35,-32,20,20,20,-26,-30,-24,-31,-25,-28,-27,20,-29,]),'ID':([0,2,3,5,6,13,14,15,16,17,19,20,21,22,23,25,29,31,36,38,39,40,41,42,43,45,49,50,51,52,53,54,58,59,60,61,62,63,64,65,66,67,68,77,78,],[8,-8,11,-6,-5,19,26,32,34,19,-38,19,-16,-37,26,46,32,48,-17,19,-34,-36,-33,-35,-32,-7,19,19,-39,-40,19,-14,-15,69,-26,-30,-24,-31,-25,-28,-27,19,-29,81,82,]),'MAYOR':([19,22,51,52,57,],[-38,-37,-39,-40,60,]),'MAYORIG':([19,22,51,52,57,],[-38,-37,-39,-40,66,]),'FOR':([0,2,5,6,14,19,21,22,23,36,45,51,52,],[10,-8,-6,-5,10,-38,-16,-37,10,-17,-7,-39,-40,]),'CPARENT':([19,22,37,51,52,69,70,79,80,81,82,],[-38,-37,51,-39,-40,-41,76,-23,-20,-22,-21,]),'DIFERENTE':([19,22,51,52,57,],[-38,-37,-39,-40,68,]),'IGUAL':([8,11,26,32,46,48,],[13,17,13,49,17,53,]),}
 
 _lr_action = { }
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'comparacionRet':([17,],[21,]),'paramFor3':([25,],[28,]),'empty':([6,],[11,]),'paramFor1':([6,],[10,]),'comparacionesRet':([17,],[23,]),'asignaciones':([6,13,],[12,18,]),'asignacion':([6,13,],[13,13,]),'emoticon':([0,],[3,]),'ids':([4,15,],[7,19,]),}
+_lr_goto_items = {'instruccioncuerpo':([0,14,23,],[5,5,5,]),'asignacion':([0,14,23,],[2,2,2,]),'comparacionRet':([50,],[56,]),'instrucciones':([0,14,23,],[4,23,44,]),'instruccion':([0,14,23,],[6,6,6,]),'cuerpo':([14,],[24,]),'emoticon':([0,],[7,]),'ids':([3,16,],[12,35,]),'for':([0,14,23,],[9,9,9,]),'asignacionesRet':([15,29,],[28,47,]),'valor':([13,17,20,38,49,50,53,67,],[21,36,37,52,54,57,58,73,]),'asignacionRet':([15,29,],[29,29,]),'empty':([14,15,],[27,30,]),'oper':([21,36,37,52,54,57,58,73,],[38,38,38,38,38,38,38,38,]),'opbooleano':([57,],[67,]),'comparacionesRet':([50,],[55,]),'paramFor3':([59,],[70,]),'paramFor1':([15,],[33,]),}
 
 _lr_goto = { }
 for _k, _v in _lr_goto_items.items():
@@ -26,23 +26,51 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> emoticon","S'",1,None,None,None),
-  ('emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT','emoticon',8,'p_for','BreteFinal',79),
-  ('emoticon -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT ACORCH CCORCH','emoticon',10,'p_forMultilinea','BreteFinal',83),
-  ('paramFor1 -> asignaciones','paramFor1',1,'p_parFor1','BreteFinal',89),
-  ('paramFor1 -> empty','paramFor1',1,'p_parFor1','BreteFinal',90),
-  ('asignaciones -> asignacion asignaciones','asignaciones',2,'p_asignaciones','BreteFinal',96),
-  ('asignaciones -> asignacion','asignaciones',1,'p_asignaciones','BreteFinal',97),
-  ('asignacion -> ID IGUAL ID','asignacion',3,'p_asignacion','BreteFinal',105),
-  ('comparacionesRet -> comparacionRet','comparacionesRet',1,'p_comparacionesRet','BreteFinal',112),
-  ('comparacionRet -> ID MENOR ID','comparacionRet',3,'p_comparacionRet','BreteFinal',120),
-  ('paramFor3 -> ID','paramFor3',1,'p_parFor3','BreteFinal',129),
-  ('emoticon -> RESERVADOS ids PUNTOCOMA','emoticon',3,'p_declaracion','BreteFinal',133),
-  ('pReservadas -> INT','pReservadas',1,'p_reservados','BreteFinal',139),
-  ('pReservadas -> DOUBLE','pReservadas',1,'p_reservados','BreteFinal',140),
-  ('pReservadas -> FLOAT','pReservadas',1,'p_reservados','BreteFinal',141),
-  ('ids -> ID COMA ids','ids',3,'p_ids','BreteFinal',147),
-  ('ids -> ID','ids',1,'p_ids2','BreteFinal',152),
-  ('emoticon -> NUM','emoticon',1,'p_prueba1','BreteFinal',162),
-  ('emoticon -> ID','emoticon',1,'p_prueba2','BreteFinal',166),
-  ('empty -> <empty>','empty',0,'p_empty','BreteFinal',170),
+  ('emoticon -> instrucciones','emoticon',1,'p_main','BreteFinal.py',86),
+  ('cuerpo -> instrucciones','cuerpo',1,'p_cuerpo','BreteFinal.py',90),
+  ('cuerpo -> instrucciones instrucciones','cuerpo',2,'p_cuerpo','BreteFinal.py',91),
+  ('cuerpo -> empty','cuerpo',1,'p_cuerpo','BreteFinal.py',92),
+  ('instrucciones -> instruccion','instrucciones',1,'p_instrucciones','BreteFinal.py',96),
+  ('instrucciones -> instruccioncuerpo','instrucciones',1,'p_instrucciones','BreteFinal.py',97),
+  ('instruccioncuerpo -> for ACORCH cuerpo CCORCH','instruccioncuerpo',4,'p_instruccioncuerpo','BreteFinal.py',100),
+  ('instruccion -> asignacion','instruccion',1,'p_instruccion','BreteFinal.py',104),
+  ('for -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT','for',8,'p_for','BreteFinal.py',109),
+  ('paramFor1 -> asignacionesRet','paramFor1',1,'p_parFor1','BreteFinal.py',121),
+  ('paramFor1 -> empty','paramFor1',1,'p_parFor1','BreteFinal.py',122),
+  ('asignacionesRet -> asignacionRet asignacionesRet','asignacionesRet',2,'p_asignacionesRet','BreteFinal.py',128),
+  ('asignacionesRet -> asignacionRet','asignacionesRet',1,'p_asignacionesRet','BreteFinal.py',129),
+  ('asignacionRet -> ID IGUAL valor','asignacionRet',3,'p_asignacionRet','BreteFinal.py',135),
+  ('asignacionRet -> RESERVADOS ID IGUAL valor','asignacionRet',4,'p_asignacionRet','BreteFinal.py',136),
+  ('asignacion -> ID IGUAL valor','asignacion',3,'p_asignacion','BreteFinal.py',141),
+  ('asignacion -> RESERVADOS ID IGUAL valor','asignacion',4,'p_asignacion','BreteFinal.py',142),
+  ('comparacionesRet -> comparacionRet','comparacionesRet',1,'p_comparacionesRet','BreteFinal.py',150),
+  ('comparacionRet -> valor opbooleano valor','comparacionRet',3,'p_comparacionRet','BreteFinal.py',155),
+  ('paramFor3 -> ID MAS MAS','paramFor3',3,'p_incredecremntoRet','BreteFinal.py',160),
+  ('paramFor3 -> MAS MAS ID','paramFor3',3,'p_incredecremntoRet','BreteFinal.py',161),
+  ('paramFor3 -> MENOS MENOS ID','paramFor3',3,'p_incredecremntoRet','BreteFinal.py',162),
+  ('paramFor3 -> ID MENOS MENOS','paramFor3',3,'p_incredecremntoRet','BreteFinal.py',163),
+  ('opbooleano -> MENOR','opbooleano',1,'p_opbooleano','BreteFinal.py',171),
+  ('opbooleano -> MENORIG','opbooleano',1,'p_opbooleano','BreteFinal.py',172),
+  ('opbooleano -> MAYOR','opbooleano',1,'p_opbooleano','BreteFinal.py',173),
+  ('opbooleano -> MAYORIG','opbooleano',1,'p_opbooleano','BreteFinal.py',174),
+  ('opbooleano -> IGUALIG','opbooleano',1,'p_opbooleano','BreteFinal.py',175),
+  ('opbooleano -> DIFERENTE','opbooleano',1,'p_opbooleano','BreteFinal.py',176),
+  ('opbooleano -> AND','opbooleano',1,'p_opbooleano','BreteFinal.py',177),
+  ('opbooleano -> OR','opbooleano',1,'p_opbooleano','BreteFinal.py',178),
+  ('oper -> MAS','oper',1,'p_oper','BreteFinal.py',191),
+  ('oper -> MENOS','oper',1,'p_oper','BreteFinal.py',192),
+  ('oper -> POR','oper',1,'p_oper','BreteFinal.py',193),
+  ('oper -> DIVIDE','oper',1,'p_oper','BreteFinal.py',194),
+  ('oper -> MODULO','oper',1,'p_oper','BreteFinal.py',195),
+  ('valor -> NUM','valor',1,'p_valor','BreteFinal.py',200),
+  ('valor -> ID','valor',1,'p_valor','BreteFinal.py',201),
+  ('valor -> APARENT valor CPARENT','valor',3,'p_valor','BreteFinal.py',202),
+  ('valor -> valor oper valor','valor',3,'p_valor','BreteFinal.py',203),
+  ('paramFor3 -> ID','paramFor3',1,'p_parFor3','BreteFinal.py',207),
+  ('emoticon -> RESERVADOS ids PUNTOCOMA','emoticon',3,'p_declaracion','BreteFinal.py',211),
+  ('ids -> ID COMA ids','ids',3,'p_ids','BreteFinal.py',225),
+  ('ids -> ID','ids',1,'p_ids2','BreteFinal.py',230),
+  ('emoticon -> NUM','emoticon',1,'p_prueba1','BreteFinal.py',240),
+  ('emoticon -> ID','emoticon',1,'p_prueba2','BreteFinal.py',244),
+  ('empty -> <empty>','empty',0,'p_empty','BreteFinal.py',248),
 ]
