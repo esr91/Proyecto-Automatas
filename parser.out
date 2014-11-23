@@ -2,10 +2,11 @@ Created by PLY version 3.4 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    INT
-    FLOAT
-    DOUBLE
     CHAR
+    TAB
+    DOUBLE
+    FLOAT
+    INT
 
 Grammar
 
@@ -61,9 +62,6 @@ Rule 48    ids -> ID
 Rule 49    emoticon -> NUM
 Rule 50    emoticon -> ID
 Rule 51    empty -> <empty>
-Rule 52    tab -> TAB tab
-Rule 53    tab -> TAB
-Rule 54    tab -> <empty>
 
 Terminals, with rules where they appear
 
@@ -95,7 +93,7 @@ OR                   : 35
 POR                  : 38
 PUNTOCOMA            : 7 13 13 46
 RESERVADOS           : 19 21 46
-TAB                  : 52 53
+TAB                  : 
 error                : 
 
 Nonterminals, with rules where they appear
@@ -119,7 +117,6 @@ opbooleano           : 23
 oper                 : 44
 paramFor1            : 13
 paramFor3            : 13
-tab                  : 52
 valor                : 18 19 20 21 23 23 43 44 44
 
 Parsing method: LALR
@@ -141,60 +138,50 @@ state 0
     (21) asignacion -> . RESERVADOS ID IGUAL valor
     (13) for -> . FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
 
-    RESERVADOS      shift and go to state 3
-    NUM             shift and go to state 4
-    ID              shift and go to state 7
-    FOR             shift and go to state 9
+    RESERVADOS      shift and go to state 10
+    NUM             shift and go to state 7
+    ID              shift and go to state 3
+    FOR             shift and go to state 4
 
-    instruccioncuerpo              shift and go to state 6
-    for                            shift and go to state 10
-    asignacion                     shift and go to state 1
-    emoticon                       shift and go to state 2
+    emoticon                       shift and go to state 1
     instruccion                    shift and go to state 8
-    instrucciones                  shift and go to state 5
+    for                            shift and go to state 2
+    asignacion                     shift and go to state 9
+    instruccioncuerpo              shift and go to state 5
+    instrucciones                  shift and go to state 6
 
 state 1
-
-    (12) instruccion -> asignacion .
-
-    PUNTOCOMA       reduce using rule 12 (instruccion -> asignacion .)
-    ID              reduce using rule 12 (instruccion -> asignacion .)
-    RESERVADOS      reduce using rule 12 (instruccion -> asignacion .)
-    FOR             reduce using rule 12 (instruccion -> asignacion .)
-
-
-state 2
 
     (0) S' -> emoticon .
 
 
 
+state 2
+
+    (9) instruccioncuerpo -> for . acorch cuerpo ccorch
+    (10) acorch -> . ACORCH
+
+    ACORCH          shift and go to state 12
+
+    acorch                         shift and go to state 11
+
 state 3
 
-    (46) emoticon -> RESERVADOS . ids PUNTOCOMA
-    (21) asignacion -> RESERVADOS . ID IGUAL valor
-    (47) ids -> . ID COMA ids
-    (48) ids -> . ID
+    (50) emoticon -> ID .
+    (20) asignacion -> ID . IGUAL valor
 
-    ID              shift and go to state 11
+    $end            reduce using rule 50 (emoticon -> ID .)
+    IGUAL           shift and go to state 13
 
-    ids                            shift and go to state 12
 
 state 4
 
-    (49) emoticon -> NUM .
+    (13) for -> FOR . APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
 
-    $end            reduce using rule 49 (emoticon -> NUM .)
+    APARENT         shift and go to state 14
 
 
 state 5
-
-    (1) emoticon -> instrucciones .
-
-    $end            reduce using rule 1 (emoticon -> instrucciones .)
-
-
-state 6
 
     (6) instrucciones -> instruccioncuerpo . instrucciones
     (8) instrucciones -> instruccioncuerpo .
@@ -213,27 +200,32 @@ state 6
   ! shift/reduce conflict for FOR resolved as shift
     $end            reduce using rule 8 (instrucciones -> instruccioncuerpo .)
     CCORCH          reduce using rule 8 (instrucciones -> instruccioncuerpo .)
-    ID              shift and go to state 13
-    RESERVADOS      shift and go to state 14
-    FOR             shift and go to state 9
+    ID              shift and go to state 17
+    RESERVADOS      shift and go to state 15
+    FOR             shift and go to state 4
 
   ! ID              [ reduce using rule 8 (instrucciones -> instruccioncuerpo .) ]
   ! RESERVADOS      [ reduce using rule 8 (instrucciones -> instruccioncuerpo .) ]
   ! FOR             [ reduce using rule 8 (instrucciones -> instruccioncuerpo .) ]
 
-    instruccioncuerpo              shift and go to state 6
-    asignacion                     shift and go to state 1
     instruccion                    shift and go to state 8
-    for                            shift and go to state 10
-    instrucciones                  shift and go to state 15
+    for                            shift and go to state 2
+    asignacion                     shift and go to state 9
+    instruccioncuerpo              shift and go to state 5
+    instrucciones                  shift and go to state 16
+
+state 6
+
+    (1) emoticon -> instrucciones .
+
+    $end            reduce using rule 1 (emoticon -> instrucciones .)
+
 
 state 7
 
-    (50) emoticon -> ID .
-    (20) asignacion -> ID . IGUAL valor
+    (49) emoticon -> NUM .
 
-    $end            reduce using rule 50 (emoticon -> ID .)
-    IGUAL           shift and go to state 16
+    $end            reduce using rule 49 (emoticon -> NUM .)
 
 
 state 8
@@ -250,143 +242,39 @@ state 8
     (21) asignacion -> . RESERVADOS ID IGUAL valor
     (13) for -> . FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
 
-    PUNTOCOMA       shift and go to state 17
-    ID              shift and go to state 13
-    RESERVADOS      shift and go to state 14
-    FOR             shift and go to state 9
+    PUNTOCOMA       shift and go to state 18
+    ID              shift and go to state 17
+    RESERVADOS      shift and go to state 15
+    FOR             shift and go to state 4
 
-    instruccioncuerpo              shift and go to state 6
-    asignacion                     shift and go to state 1
     instruccion                    shift and go to state 8
-    for                            shift and go to state 10
-    instrucciones                  shift and go to state 18
+    for                            shift and go to state 2
+    asignacion                     shift and go to state 9
+    instruccioncuerpo              shift and go to state 5
+    instrucciones                  shift and go to state 19
 
 state 9
 
-    (13) for -> FOR . APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
+    (12) instruccion -> asignacion .
 
-    APARENT         shift and go to state 19
+    PUNTOCOMA       reduce using rule 12 (instruccion -> asignacion .)
+    ID              reduce using rule 12 (instruccion -> asignacion .)
+    RESERVADOS      reduce using rule 12 (instruccion -> asignacion .)
+    FOR             reduce using rule 12 (instruccion -> asignacion .)
 
 
 state 10
 
-    (9) instruccioncuerpo -> for . acorch cuerpo ccorch
-    (10) acorch -> . ACORCH
+    (46) emoticon -> RESERVADOS . ids PUNTOCOMA
+    (21) asignacion -> RESERVADOS . ID IGUAL valor
+    (47) ids -> . ID COMA ids
+    (48) ids -> . ID
 
-    ACORCH          shift and go to state 20
+    ID              shift and go to state 21
 
-    acorch                         shift and go to state 21
+    ids                            shift and go to state 20
 
 state 11
-
-    (21) asignacion -> RESERVADOS ID . IGUAL valor
-    (47) ids -> ID . COMA ids
-    (48) ids -> ID .
-
-    IGUAL           shift and go to state 22
-    COMA            shift and go to state 23
-    PUNTOCOMA       reduce using rule 48 (ids -> ID .)
-
-
-state 12
-
-    (46) emoticon -> RESERVADOS ids . PUNTOCOMA
-
-    PUNTOCOMA       shift and go to state 24
-
-
-state 13
-
-    (20) asignacion -> ID . IGUAL valor
-
-    IGUAL           shift and go to state 16
-
-
-state 14
-
-    (21) asignacion -> RESERVADOS . ID IGUAL valor
-
-    ID              shift and go to state 25
-
-
-state 15
-
-    (6) instrucciones -> instruccioncuerpo instrucciones .
-
-    $end            reduce using rule 6 (instrucciones -> instruccioncuerpo instrucciones .)
-    ID              reduce using rule 6 (instrucciones -> instruccioncuerpo instrucciones .)
-    RESERVADOS      reduce using rule 6 (instrucciones -> instruccioncuerpo instrucciones .)
-    FOR             reduce using rule 6 (instrucciones -> instruccioncuerpo instrucciones .)
-    CCORCH          reduce using rule 6 (instrucciones -> instruccioncuerpo instrucciones .)
-
-
-state 16
-
-    (20) asignacion -> ID IGUAL . valor
-    (41) valor -> . NUM
-    (42) valor -> . ID
-    (43) valor -> . APARENT valor CPARENT
-    (44) valor -> . valor oper valor
-
-    NUM             shift and go to state 26
-    ID              shift and go to state 27
-    APARENT         shift and go to state 28
-
-    valor                          shift and go to state 29
-
-state 17
-
-    (7) instrucciones -> instruccion PUNTOCOMA .
-
-    $end            reduce using rule 7 (instrucciones -> instruccion PUNTOCOMA .)
-    ID              reduce using rule 7 (instrucciones -> instruccion PUNTOCOMA .)
-    RESERVADOS      reduce using rule 7 (instrucciones -> instruccion PUNTOCOMA .)
-    FOR             reduce using rule 7 (instrucciones -> instruccion PUNTOCOMA .)
-    CCORCH          reduce using rule 7 (instrucciones -> instruccion PUNTOCOMA .)
-
-
-state 18
-
-    (5) instrucciones -> instruccion instrucciones .
-
-    $end            reduce using rule 5 (instrucciones -> instruccion instrucciones .)
-    ID              reduce using rule 5 (instrucciones -> instruccion instrucciones .)
-    RESERVADOS      reduce using rule 5 (instrucciones -> instruccion instrucciones .)
-    FOR             reduce using rule 5 (instrucciones -> instruccion instrucciones .)
-    CCORCH          reduce using rule 5 (instrucciones -> instruccion instrucciones .)
-
-
-state 19
-
-    (13) for -> FOR APARENT . paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
-    (14) paramFor1 -> . asignacionesRet
-    (15) paramFor1 -> . empty
-    (16) asignacionesRet -> . asignacionRet asignacionesRet
-    (17) asignacionesRet -> . asignacionRet
-    (51) empty -> .
-    (18) asignacionRet -> . ID IGUAL valor
-    (19) asignacionRet -> . RESERVADOS ID IGUAL valor
-
-    PUNTOCOMA       reduce using rule 51 (empty -> .)
-    ID              shift and go to state 31
-    RESERVADOS      shift and go to state 32
-
-    asignacionRet                  shift and go to state 34
-    empty                          shift and go to state 30
-    paramFor1                      shift and go to state 33
-    asignacionesRet                shift and go to state 35
-
-state 20
-
-    (10) acorch -> ACORCH .
-
-    ID              reduce using rule 10 (acorch -> ACORCH .)
-    RESERVADOS      reduce using rule 10 (acorch -> ACORCH .)
-    FOR             reduce using rule 10 (acorch -> ACORCH .)
-    CCORCH          reduce using rule 10 (acorch -> ACORCH .)
-
-
-state 21
 
     (9) instruccioncuerpo -> for acorch . cuerpo ccorch
     (2) cuerpo -> . instrucciones
@@ -404,57 +292,169 @@ state 21
     (13) for -> . FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
 
     CCORCH          reduce using rule 51 (empty -> .)
-    ID              shift and go to state 13
-    RESERVADOS      shift and go to state 14
-    FOR             shift and go to state 9
+    ID              shift and go to state 17
+    RESERVADOS      shift and go to state 15
+    FOR             shift and go to state 4
 
-    instruccioncuerpo              shift and go to state 6
-    empty                          shift and go to state 36
-    asignacion                     shift and go to state 1
+    empty                          shift and go to state 22
     instruccion                    shift and go to state 8
-    instrucciones                  shift and go to state 37
-    cuerpo                         shift and go to state 38
-    for                            shift and go to state 10
+    cuerpo                         shift and go to state 24
+    for                            shift and go to state 2
+    asignacion                     shift and go to state 9
+    instruccioncuerpo              shift and go to state 5
+    instrucciones                  shift and go to state 23
 
-state 22
+state 12
 
-    (21) asignacion -> RESERVADOS ID IGUAL . valor
+    (10) acorch -> ACORCH .
+
+    ID              reduce using rule 10 (acorch -> ACORCH .)
+    RESERVADOS      reduce using rule 10 (acorch -> ACORCH .)
+    FOR             reduce using rule 10 (acorch -> ACORCH .)
+    CCORCH          reduce using rule 10 (acorch -> ACORCH .)
+
+
+state 13
+
+    (20) asignacion -> ID IGUAL . valor
     (41) valor -> . NUM
     (42) valor -> . ID
     (43) valor -> . APARENT valor CPARENT
     (44) valor -> . valor oper valor
 
-    NUM             shift and go to state 26
-    ID              shift and go to state 27
-    APARENT         shift and go to state 28
+    NUM             shift and go to state 25
+    ID              shift and go to state 28
+    APARENT         shift and go to state 26
 
-    valor                          shift and go to state 39
+    valor                          shift and go to state 27
+
+state 14
+
+    (13) for -> FOR APARENT . paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
+    (14) paramFor1 -> . asignacionesRet
+    (15) paramFor1 -> . empty
+    (16) asignacionesRet -> . asignacionRet asignacionesRet
+    (17) asignacionesRet -> . asignacionRet
+    (51) empty -> .
+    (18) asignacionRet -> . ID IGUAL valor
+    (19) asignacionRet -> . RESERVADOS ID IGUAL valor
+
+    PUNTOCOMA       reduce using rule 51 (empty -> .)
+    ID              shift and go to state 34
+    RESERVADOS      shift and go to state 33
+
+    asignacionRet                  shift and go to state 32
+    empty                          shift and go to state 29
+    paramFor1                      shift and go to state 30
+    asignacionesRet                shift and go to state 31
+
+state 15
+
+    (21) asignacion -> RESERVADOS . ID IGUAL valor
+
+    ID              shift and go to state 35
+
+
+state 16
+
+    (6) instrucciones -> instruccioncuerpo instrucciones .
+
+    $end            reduce using rule 6 (instrucciones -> instruccioncuerpo instrucciones .)
+    ID              reduce using rule 6 (instrucciones -> instruccioncuerpo instrucciones .)
+    RESERVADOS      reduce using rule 6 (instrucciones -> instruccioncuerpo instrucciones .)
+    FOR             reduce using rule 6 (instrucciones -> instruccioncuerpo instrucciones .)
+    CCORCH          reduce using rule 6 (instrucciones -> instruccioncuerpo instrucciones .)
+
+
+state 17
+
+    (20) asignacion -> ID . IGUAL valor
+
+    IGUAL           shift and go to state 13
+
+
+state 18
+
+    (7) instrucciones -> instruccion PUNTOCOMA .
+
+    $end            reduce using rule 7 (instrucciones -> instruccion PUNTOCOMA .)
+    ID              reduce using rule 7 (instrucciones -> instruccion PUNTOCOMA .)
+    RESERVADOS      reduce using rule 7 (instrucciones -> instruccion PUNTOCOMA .)
+    FOR             reduce using rule 7 (instrucciones -> instruccion PUNTOCOMA .)
+    CCORCH          reduce using rule 7 (instrucciones -> instruccion PUNTOCOMA .)
+
+
+state 19
+
+    (5) instrucciones -> instruccion instrucciones .
+
+    $end            reduce using rule 5 (instrucciones -> instruccion instrucciones .)
+    ID              reduce using rule 5 (instrucciones -> instruccion instrucciones .)
+    RESERVADOS      reduce using rule 5 (instrucciones -> instruccion instrucciones .)
+    FOR             reduce using rule 5 (instrucciones -> instruccion instrucciones .)
+    CCORCH          reduce using rule 5 (instrucciones -> instruccion instrucciones .)
+
+
+state 20
+
+    (46) emoticon -> RESERVADOS ids . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 36
+
+
+state 21
+
+    (21) asignacion -> RESERVADOS ID . IGUAL valor
+    (47) ids -> ID . COMA ids
+    (48) ids -> ID .
+
+    IGUAL           shift and go to state 37
+    COMA            shift and go to state 38
+    PUNTOCOMA       reduce using rule 48 (ids -> ID .)
+
+
+state 22
+
+    (4) cuerpo -> empty .
+
+    CCORCH          reduce using rule 4 (cuerpo -> empty .)
+
 
 state 23
 
-    (47) ids -> ID COMA . ids
-    (47) ids -> . ID COMA ids
-    (48) ids -> . ID
+    (2) cuerpo -> instrucciones .
+    (3) cuerpo -> instrucciones . instrucciones
+    (5) instrucciones -> . instruccion instrucciones
+    (6) instrucciones -> . instruccioncuerpo instrucciones
+    (7) instrucciones -> . instruccion PUNTOCOMA
+    (8) instrucciones -> . instruccioncuerpo
+    (12) instruccion -> . asignacion
+    (9) instruccioncuerpo -> . for acorch cuerpo ccorch
+    (20) asignacion -> . ID IGUAL valor
+    (21) asignacion -> . RESERVADOS ID IGUAL valor
+    (13) for -> . FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
 
-    ID              shift and go to state 41
+    CCORCH          reduce using rule 2 (cuerpo -> instrucciones .)
+    ID              shift and go to state 17
+    RESERVADOS      shift and go to state 15
+    FOR             shift and go to state 4
 
-    ids                            shift and go to state 40
+    instruccion                    shift and go to state 8
+    for                            shift and go to state 2
+    asignacion                     shift and go to state 9
+    instruccioncuerpo              shift and go to state 5
+    instrucciones                  shift and go to state 39
 
 state 24
 
-    (46) emoticon -> RESERVADOS ids PUNTOCOMA .
+    (9) instruccioncuerpo -> for acorch cuerpo . ccorch
+    (11) ccorch -> . CCORCH
 
-    $end            reduce using rule 46 (emoticon -> RESERVADOS ids PUNTOCOMA .)
+    CCORCH          shift and go to state 40
 
+    ccorch                         shift and go to state 41
 
 state 25
-
-    (21) asignacion -> RESERVADOS ID . IGUAL valor
-
-    IGUAL           shift and go to state 22
-
-
-state 26
 
     (41) valor -> NUM .
 
@@ -478,7 +478,43 @@ state 26
     OR              reduce using rule 41 (valor -> NUM .)
 
 
+state 26
+
+    (43) valor -> APARENT . valor CPARENT
+    (41) valor -> . NUM
+    (42) valor -> . ID
+    (43) valor -> . APARENT valor CPARENT
+    (44) valor -> . valor oper valor
+
+    NUM             shift and go to state 25
+    ID              shift and go to state 28
+    APARENT         shift and go to state 26
+
+    valor                          shift and go to state 42
+
 state 27
+
+    (20) asignacion -> ID IGUAL valor .
+    (44) valor -> valor . oper valor
+    (36) oper -> . MAS
+    (37) oper -> . MENOS
+    (38) oper -> . POR
+    (39) oper -> . DIVIDE
+    (40) oper -> . MODULO
+
+    PUNTOCOMA       reduce using rule 20 (asignacion -> ID IGUAL valor .)
+    ID              reduce using rule 20 (asignacion -> ID IGUAL valor .)
+    RESERVADOS      reduce using rule 20 (asignacion -> ID IGUAL valor .)
+    FOR             reduce using rule 20 (asignacion -> ID IGUAL valor .)
+    MAS             shift and go to state 45
+    MENOS           shift and go to state 47
+    POR             shift and go to state 44
+    DIVIDE          shift and go to state 46
+    MODULO          shift and go to state 43
+
+    oper                           shift and go to state 48
+
+state 28
 
     (42) valor -> ID .
 
@@ -502,71 +538,28 @@ state 27
     OR              reduce using rule 42 (valor -> ID .)
 
 
-state 28
-
-    (43) valor -> APARENT . valor CPARENT
-    (41) valor -> . NUM
-    (42) valor -> . ID
-    (43) valor -> . APARENT valor CPARENT
-    (44) valor -> . valor oper valor
-
-    NUM             shift and go to state 26
-    ID              shift and go to state 27
-    APARENT         shift and go to state 28
-
-    valor                          shift and go to state 42
-
 state 29
-
-    (20) asignacion -> ID IGUAL valor .
-    (44) valor -> valor . oper valor
-    (36) oper -> . MAS
-    (37) oper -> . MENOS
-    (38) oper -> . POR
-    (39) oper -> . DIVIDE
-    (40) oper -> . MODULO
-
-    PUNTOCOMA       reduce using rule 20 (asignacion -> ID IGUAL valor .)
-    ID              reduce using rule 20 (asignacion -> ID IGUAL valor .)
-    RESERVADOS      reduce using rule 20 (asignacion -> ID IGUAL valor .)
-    FOR             reduce using rule 20 (asignacion -> ID IGUAL valor .)
-    MAS             shift and go to state 45
-    MENOS           shift and go to state 44
-    POR             shift and go to state 48
-    DIVIDE          shift and go to state 47
-    MODULO          shift and go to state 46
-
-    oper                           shift and go to state 43
-
-state 30
 
     (15) paramFor1 -> empty .
 
     PUNTOCOMA       reduce using rule 15 (paramFor1 -> empty .)
 
 
-state 31
-
-    (18) asignacionRet -> ID . IGUAL valor
-
-    IGUAL           shift and go to state 49
-
-
-state 32
-
-    (19) asignacionRet -> RESERVADOS . ID IGUAL valor
-
-    ID              shift and go to state 50
-
-
-state 33
+state 30
 
     (13) for -> FOR APARENT paramFor1 . PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
 
-    PUNTOCOMA       shift and go to state 51
+    PUNTOCOMA       shift and go to state 49
 
 
-state 34
+state 31
+
+    (14) paramFor1 -> asignacionesRet .
+
+    PUNTOCOMA       reduce using rule 14 (paramFor1 -> asignacionesRet .)
+
+
+state 32
 
     (16) asignacionesRet -> asignacionRet . asignacionesRet
     (17) asignacionesRet -> asignacionRet .
@@ -576,96 +569,91 @@ state 34
     (19) asignacionRet -> . RESERVADOS ID IGUAL valor
 
     PUNTOCOMA       reduce using rule 17 (asignacionesRet -> asignacionRet .)
-    ID              shift and go to state 31
-    RESERVADOS      shift and go to state 32
+    ID              shift and go to state 34
+    RESERVADOS      shift and go to state 33
 
-    asignacionRet                  shift and go to state 34
-    asignacionesRet                shift and go to state 52
+    asignacionRet                  shift and go to state 32
+    asignacionesRet                shift and go to state 50
+
+state 33
+
+    (19) asignacionRet -> RESERVADOS . ID IGUAL valor
+
+    ID              shift and go to state 51
+
+
+state 34
+
+    (18) asignacionRet -> ID . IGUAL valor
+
+    IGUAL           shift and go to state 52
+
 
 state 35
 
-    (14) paramFor1 -> asignacionesRet .
+    (21) asignacion -> RESERVADOS ID . IGUAL valor
 
-    PUNTOCOMA       reduce using rule 14 (paramFor1 -> asignacionesRet .)
+    IGUAL           shift and go to state 37
 
 
 state 36
 
-    (4) cuerpo -> empty .
+    (46) emoticon -> RESERVADOS ids PUNTOCOMA .
 
-    CCORCH          reduce using rule 4 (cuerpo -> empty .)
+    $end            reduce using rule 46 (emoticon -> RESERVADOS ids PUNTOCOMA .)
 
 
 state 37
 
-    (2) cuerpo -> instrucciones .
-    (3) cuerpo -> instrucciones . instrucciones
-    (5) instrucciones -> . instruccion instrucciones
-    (6) instrucciones -> . instruccioncuerpo instrucciones
-    (7) instrucciones -> . instruccion PUNTOCOMA
-    (8) instrucciones -> . instruccioncuerpo
-    (12) instruccion -> . asignacion
-    (9) instruccioncuerpo -> . for acorch cuerpo ccorch
-    (20) asignacion -> . ID IGUAL valor
-    (21) asignacion -> . RESERVADOS ID IGUAL valor
-    (13) for -> . FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT
+    (21) asignacion -> RESERVADOS ID IGUAL . valor
+    (41) valor -> . NUM
+    (42) valor -> . ID
+    (43) valor -> . APARENT valor CPARENT
+    (44) valor -> . valor oper valor
 
-    CCORCH          reduce using rule 2 (cuerpo -> instrucciones .)
-    ID              shift and go to state 13
-    RESERVADOS      shift and go to state 14
-    FOR             shift and go to state 9
+    NUM             shift and go to state 25
+    ID              shift and go to state 28
+    APARENT         shift and go to state 26
 
-    instruccioncuerpo              shift and go to state 6
-    asignacion                     shift and go to state 1
-    instruccion                    shift and go to state 8
-    for                            shift and go to state 10
-    instrucciones                  shift and go to state 53
+    valor                          shift and go to state 53
 
 state 38
 
-    (9) instruccioncuerpo -> for acorch cuerpo . ccorch
-    (11) ccorch -> . CCORCH
+    (47) ids -> ID COMA . ids
+    (47) ids -> . ID COMA ids
+    (48) ids -> . ID
 
-    CCORCH          shift and go to state 54
+    ID              shift and go to state 55
 
-    ccorch                         shift and go to state 55
+    ids                            shift and go to state 54
 
 state 39
 
-    (21) asignacion -> RESERVADOS ID IGUAL valor .
-    (44) valor -> valor . oper valor
-    (36) oper -> . MAS
-    (37) oper -> . MENOS
-    (38) oper -> . POR
-    (39) oper -> . DIVIDE
-    (40) oper -> . MODULO
+    (3) cuerpo -> instrucciones instrucciones .
 
-    PUNTOCOMA       reduce using rule 21 (asignacion -> RESERVADOS ID IGUAL valor .)
-    ID              reduce using rule 21 (asignacion -> RESERVADOS ID IGUAL valor .)
-    RESERVADOS      reduce using rule 21 (asignacion -> RESERVADOS ID IGUAL valor .)
-    FOR             reduce using rule 21 (asignacion -> RESERVADOS ID IGUAL valor .)
-    MAS             shift and go to state 45
-    MENOS           shift and go to state 44
-    POR             shift and go to state 48
-    DIVIDE          shift and go to state 47
-    MODULO          shift and go to state 46
+    CCORCH          reduce using rule 3 (cuerpo -> instrucciones instrucciones .)
 
-    oper                           shift and go to state 43
 
 state 40
 
-    (47) ids -> ID COMA ids .
+    (11) ccorch -> CCORCH .
 
-    PUNTOCOMA       reduce using rule 47 (ids -> ID COMA ids .)
+    ID              reduce using rule 11 (ccorch -> CCORCH .)
+    RESERVADOS      reduce using rule 11 (ccorch -> CCORCH .)
+    FOR             reduce using rule 11 (ccorch -> CCORCH .)
+    $end            reduce using rule 11 (ccorch -> CCORCH .)
+    CCORCH          reduce using rule 11 (ccorch -> CCORCH .)
 
 
 state 41
 
-    (47) ids -> ID . COMA ids
-    (48) ids -> ID .
+    (9) instruccioncuerpo -> for acorch cuerpo ccorch .
 
-    COMA            shift and go to state 23
-    PUNTOCOMA       reduce using rule 48 (ids -> ID .)
+    ID              reduce using rule 9 (instruccioncuerpo -> for acorch cuerpo ccorch .)
+    RESERVADOS      reduce using rule 9 (instruccioncuerpo -> for acorch cuerpo ccorch .)
+    FOR             reduce using rule 9 (instruccioncuerpo -> for acorch cuerpo ccorch .)
+    CCORCH          reduce using rule 9 (instruccioncuerpo -> for acorch cuerpo ccorch .)
+    $end            reduce using rule 9 (instruccioncuerpo -> for acorch cuerpo ccorch .)
 
 
 state 42
@@ -680,34 +668,29 @@ state 42
 
     CPARENT         shift and go to state 56
     MAS             shift and go to state 45
-    MENOS           shift and go to state 44
-    POR             shift and go to state 48
-    DIVIDE          shift and go to state 47
-    MODULO          shift and go to state 46
+    MENOS           shift and go to state 47
+    POR             shift and go to state 44
+    DIVIDE          shift and go to state 46
+    MODULO          shift and go to state 43
 
-    oper                           shift and go to state 43
+    oper                           shift and go to state 48
 
 state 43
 
-    (44) valor -> valor oper . valor
-    (41) valor -> . NUM
-    (42) valor -> . ID
-    (43) valor -> . APARENT valor CPARENT
-    (44) valor -> . valor oper valor
+    (40) oper -> MODULO .
 
-    NUM             shift and go to state 26
-    ID              shift and go to state 27
-    APARENT         shift and go to state 28
+    NUM             reduce using rule 40 (oper -> MODULO .)
+    ID              reduce using rule 40 (oper -> MODULO .)
+    APARENT         reduce using rule 40 (oper -> MODULO .)
 
-    valor                          shift and go to state 57
 
 state 44
 
-    (37) oper -> MENOS .
+    (38) oper -> POR .
 
-    NUM             reduce using rule 37 (oper -> MENOS .)
-    ID              reduce using rule 37 (oper -> MENOS .)
-    APARENT         reduce using rule 37 (oper -> MENOS .)
+    NUM             reduce using rule 38 (oper -> POR .)
+    ID              reduce using rule 38 (oper -> POR .)
+    APARENT         reduce using rule 38 (oper -> POR .)
 
 
 state 45
@@ -721,15 +704,6 @@ state 45
 
 state 46
 
-    (40) oper -> MODULO .
-
-    NUM             reduce using rule 40 (oper -> MODULO .)
-    ID              reduce using rule 40 (oper -> MODULO .)
-    APARENT         reduce using rule 40 (oper -> MODULO .)
-
-
-state 47
-
     (39) oper -> DIVIDE .
 
     NUM             reduce using rule 39 (oper -> DIVIDE .)
@@ -737,37 +711,30 @@ state 47
     APARENT         reduce using rule 39 (oper -> DIVIDE .)
 
 
+state 47
+
+    (37) oper -> MENOS .
+
+    NUM             reduce using rule 37 (oper -> MENOS .)
+    ID              reduce using rule 37 (oper -> MENOS .)
+    APARENT         reduce using rule 37 (oper -> MENOS .)
+
+
 state 48
 
-    (38) oper -> POR .
-
-    NUM             reduce using rule 38 (oper -> POR .)
-    ID              reduce using rule 38 (oper -> POR .)
-    APARENT         reduce using rule 38 (oper -> POR .)
-
-
-state 49
-
-    (18) asignacionRet -> ID IGUAL . valor
+    (44) valor -> valor oper . valor
     (41) valor -> . NUM
     (42) valor -> . ID
     (43) valor -> . APARENT valor CPARENT
     (44) valor -> . valor oper valor
 
-    NUM             shift and go to state 26
-    ID              shift and go to state 27
-    APARENT         shift and go to state 28
+    NUM             shift and go to state 25
+    ID              shift and go to state 28
+    APARENT         shift and go to state 26
 
-    valor                          shift and go to state 58
+    valor                          shift and go to state 57
 
-state 50
-
-    (19) asignacionRet -> RESERVADOS ID . IGUAL valor
-
-    IGUAL           shift and go to state 59
-
-
-state 51
+state 49
 
     (13) for -> FOR APARENT paramFor1 PUNTOCOMA . comparacionesRet PUNTOCOMA paramFor3 CPARENT
     (22) comparacionesRet -> . comparacionRet
@@ -777,48 +744,78 @@ state 51
     (43) valor -> . APARENT valor CPARENT
     (44) valor -> . valor oper valor
 
-    NUM             shift and go to state 26
-    ID              shift and go to state 27
-    APARENT         shift and go to state 28
+    NUM             shift and go to state 25
+    ID              shift and go to state 28
+    APARENT         shift and go to state 26
 
-    comparacionesRet               shift and go to state 60
-    valor                          shift and go to state 61
-    comparacionRet                 shift and go to state 62
+    comparacionesRet               shift and go to state 59
+    comparacionRet                 shift and go to state 58
+    valor                          shift and go to state 60
 
-state 52
+state 50
 
     (16) asignacionesRet -> asignacionRet asignacionesRet .
 
     PUNTOCOMA       reduce using rule 16 (asignacionesRet -> asignacionRet asignacionesRet .)
 
 
+state 51
+
+    (19) asignacionRet -> RESERVADOS ID . IGUAL valor
+
+    IGUAL           shift and go to state 61
+
+
+state 52
+
+    (18) asignacionRet -> ID IGUAL . valor
+    (41) valor -> . NUM
+    (42) valor -> . ID
+    (43) valor -> . APARENT valor CPARENT
+    (44) valor -> . valor oper valor
+
+    NUM             shift and go to state 25
+    ID              shift and go to state 28
+    APARENT         shift and go to state 26
+
+    valor                          shift and go to state 62
+
 state 53
 
-    (3) cuerpo -> instrucciones instrucciones .
+    (21) asignacion -> RESERVADOS ID IGUAL valor .
+    (44) valor -> valor . oper valor
+    (36) oper -> . MAS
+    (37) oper -> . MENOS
+    (38) oper -> . POR
+    (39) oper -> . DIVIDE
+    (40) oper -> . MODULO
 
-    CCORCH          reduce using rule 3 (cuerpo -> instrucciones instrucciones .)
+    PUNTOCOMA       reduce using rule 21 (asignacion -> RESERVADOS ID IGUAL valor .)
+    ID              reduce using rule 21 (asignacion -> RESERVADOS ID IGUAL valor .)
+    RESERVADOS      reduce using rule 21 (asignacion -> RESERVADOS ID IGUAL valor .)
+    FOR             reduce using rule 21 (asignacion -> RESERVADOS ID IGUAL valor .)
+    MAS             shift and go to state 45
+    MENOS           shift and go to state 47
+    POR             shift and go to state 44
+    DIVIDE          shift and go to state 46
+    MODULO          shift and go to state 43
 
+    oper                           shift and go to state 48
 
 state 54
 
-    (11) ccorch -> CCORCH .
+    (47) ids -> ID COMA ids .
 
-    ID              reduce using rule 11 (ccorch -> CCORCH .)
-    RESERVADOS      reduce using rule 11 (ccorch -> CCORCH .)
-    FOR             reduce using rule 11 (ccorch -> CCORCH .)
-    $end            reduce using rule 11 (ccorch -> CCORCH .)
-    CCORCH          reduce using rule 11 (ccorch -> CCORCH .)
+    PUNTOCOMA       reduce using rule 47 (ids -> ID COMA ids .)
 
 
 state 55
 
-    (9) instruccioncuerpo -> for acorch cuerpo ccorch .
+    (47) ids -> ID . COMA ids
+    (48) ids -> ID .
 
-    ID              reduce using rule 9 (instruccioncuerpo -> for acorch cuerpo ccorch .)
-    RESERVADOS      reduce using rule 9 (instruccioncuerpo -> for acorch cuerpo ccorch .)
-    FOR             reduce using rule 9 (instruccioncuerpo -> for acorch cuerpo ccorch .)
-    CCORCH          reduce using rule 9 (instruccioncuerpo -> for acorch cuerpo ccorch .)
-    $end            reduce using rule 9 (instruccioncuerpo -> for acorch cuerpo ccorch .)
+    COMA            shift and go to state 38
+    PUNTOCOMA       reduce using rule 48 (ids -> ID .)
 
 
 state 56
@@ -874,10 +871,10 @@ state 57
     AND             reduce using rule 44 (valor -> valor oper valor .)
     OR              reduce using rule 44 (valor -> valor oper valor .)
     MAS             shift and go to state 45
-    MENOS           shift and go to state 44
-    POR             shift and go to state 48
-    DIVIDE          shift and go to state 47
-    MODULO          shift and go to state 46
+    MENOS           shift and go to state 47
+    POR             shift and go to state 44
+    DIVIDE          shift and go to state 46
+    MODULO          shift and go to state 43
 
   ! MAS             [ reduce using rule 44 (valor -> valor oper valor .) ]
   ! MENOS           [ reduce using rule 44 (valor -> valor oper valor .) ]
@@ -885,51 +882,23 @@ state 57
   ! DIVIDE          [ reduce using rule 44 (valor -> valor oper valor .) ]
   ! MODULO          [ reduce using rule 44 (valor -> valor oper valor .) ]
 
-    oper                           shift and go to state 43
+    oper                           shift and go to state 48
 
 state 58
 
-    (18) asignacionRet -> ID IGUAL valor .
-    (44) valor -> valor . oper valor
-    (36) oper -> . MAS
-    (37) oper -> . MENOS
-    (38) oper -> . POR
-    (39) oper -> . DIVIDE
-    (40) oper -> . MODULO
+    (22) comparacionesRet -> comparacionRet .
 
-    ID              reduce using rule 18 (asignacionRet -> ID IGUAL valor .)
-    RESERVADOS      reduce using rule 18 (asignacionRet -> ID IGUAL valor .)
-    PUNTOCOMA       reduce using rule 18 (asignacionRet -> ID IGUAL valor .)
-    MAS             shift and go to state 45
-    MENOS           shift and go to state 44
-    POR             shift and go to state 48
-    DIVIDE          shift and go to state 47
-    MODULO          shift and go to state 46
+    PUNTOCOMA       reduce using rule 22 (comparacionesRet -> comparacionRet .)
 
-    oper                           shift and go to state 43
 
 state 59
 
-    (19) asignacionRet -> RESERVADOS ID IGUAL . valor
-    (41) valor -> . NUM
-    (42) valor -> . ID
-    (43) valor -> . APARENT valor CPARENT
-    (44) valor -> . valor oper valor
-
-    NUM             shift and go to state 26
-    ID              shift and go to state 27
-    APARENT         shift and go to state 28
-
-    valor                          shift and go to state 63
-
-state 60
-
     (13) for -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet . PUNTOCOMA paramFor3 CPARENT
 
-    PUNTOCOMA       shift and go to state 64
+    PUNTOCOMA       shift and go to state 63
 
 
-state 61
+state 60
 
     (23) comparacionRet -> valor . opbooleano valor
     (44) valor -> valor . oper valor
@@ -947,31 +916,160 @@ state 61
     (39) oper -> . DIVIDE
     (40) oper -> . MODULO
 
-    MENOR           shift and go to state 67
-    MENORIG         shift and go to state 66
-    MAYOR           shift and go to state 73
-    MAYORIG         shift and go to state 72
-    IGUALIG         shift and go to state 65
-    DIFERENTE       shift and go to state 71
-    AND             shift and go to state 68
-    OR              shift and go to state 70
+    MENOR           shift and go to state 71
+    MENORIG         shift and go to state 64
+    MAYOR           shift and go to state 66
+    MAYORIG         shift and go to state 65
+    IGUALIG         shift and go to state 72
+    DIFERENTE       shift and go to state 68
+    AND             shift and go to state 67
+    OR              shift and go to state 69
     MAS             shift and go to state 45
-    MENOS           shift and go to state 44
-    POR             shift and go to state 48
-    DIVIDE          shift and go to state 47
-    MODULO          shift and go to state 46
+    MENOS           shift and go to state 47
+    POR             shift and go to state 44
+    DIVIDE          shift and go to state 46
+    MODULO          shift and go to state 43
 
-    opbooleano                     shift and go to state 69
-    oper                           shift and go to state 43
+    opbooleano                     shift and go to state 70
+    oper                           shift and go to state 48
+
+state 61
+
+    (19) asignacionRet -> RESERVADOS ID IGUAL . valor
+    (41) valor -> . NUM
+    (42) valor -> . ID
+    (43) valor -> . APARENT valor CPARENT
+    (44) valor -> . valor oper valor
+
+    NUM             shift and go to state 25
+    ID              shift and go to state 28
+    APARENT         shift and go to state 26
+
+    valor                          shift and go to state 73
 
 state 62
 
-    (22) comparacionesRet -> comparacionRet .
+    (18) asignacionRet -> ID IGUAL valor .
+    (44) valor -> valor . oper valor
+    (36) oper -> . MAS
+    (37) oper -> . MENOS
+    (38) oper -> . POR
+    (39) oper -> . DIVIDE
+    (40) oper -> . MODULO
 
-    PUNTOCOMA       reduce using rule 22 (comparacionesRet -> comparacionRet .)
+    ID              reduce using rule 18 (asignacionRet -> ID IGUAL valor .)
+    RESERVADOS      reduce using rule 18 (asignacionRet -> ID IGUAL valor .)
+    PUNTOCOMA       reduce using rule 18 (asignacionRet -> ID IGUAL valor .)
+    MAS             shift and go to state 45
+    MENOS           shift and go to state 47
+    POR             shift and go to state 44
+    DIVIDE          shift and go to state 46
+    MODULO          shift and go to state 43
 
+    oper                           shift and go to state 48
 
 state 63
+
+    (13) for -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA . paramFor3 CPARENT
+    (24) paramFor3 -> . ID MAS MAS
+    (25) paramFor3 -> . MAS MAS ID
+    (26) paramFor3 -> . MENOS MENOS ID
+    (27) paramFor3 -> . ID MENOS MENOS
+    (45) paramFor3 -> . ID
+
+    ID              shift and go to state 74
+    MAS             shift and go to state 76
+    MENOS           shift and go to state 75
+
+    paramFor3                      shift and go to state 77
+
+state 64
+
+    (29) opbooleano -> MENORIG .
+
+    NUM             reduce using rule 29 (opbooleano -> MENORIG .)
+    ID              reduce using rule 29 (opbooleano -> MENORIG .)
+    APARENT         reduce using rule 29 (opbooleano -> MENORIG .)
+
+
+state 65
+
+    (31) opbooleano -> MAYORIG .
+
+    NUM             reduce using rule 31 (opbooleano -> MAYORIG .)
+    ID              reduce using rule 31 (opbooleano -> MAYORIG .)
+    APARENT         reduce using rule 31 (opbooleano -> MAYORIG .)
+
+
+state 66
+
+    (30) opbooleano -> MAYOR .
+
+    NUM             reduce using rule 30 (opbooleano -> MAYOR .)
+    ID              reduce using rule 30 (opbooleano -> MAYOR .)
+    APARENT         reduce using rule 30 (opbooleano -> MAYOR .)
+
+
+state 67
+
+    (34) opbooleano -> AND .
+
+    NUM             reduce using rule 34 (opbooleano -> AND .)
+    ID              reduce using rule 34 (opbooleano -> AND .)
+    APARENT         reduce using rule 34 (opbooleano -> AND .)
+
+
+state 68
+
+    (33) opbooleano -> DIFERENTE .
+
+    NUM             reduce using rule 33 (opbooleano -> DIFERENTE .)
+    ID              reduce using rule 33 (opbooleano -> DIFERENTE .)
+    APARENT         reduce using rule 33 (opbooleano -> DIFERENTE .)
+
+
+state 69
+
+    (35) opbooleano -> OR .
+
+    NUM             reduce using rule 35 (opbooleano -> OR .)
+    ID              reduce using rule 35 (opbooleano -> OR .)
+    APARENT         reduce using rule 35 (opbooleano -> OR .)
+
+
+state 70
+
+    (23) comparacionRet -> valor opbooleano . valor
+    (41) valor -> . NUM
+    (42) valor -> . ID
+    (43) valor -> . APARENT valor CPARENT
+    (44) valor -> . valor oper valor
+
+    NUM             shift and go to state 25
+    ID              shift and go to state 28
+    APARENT         shift and go to state 26
+
+    valor                          shift and go to state 78
+
+state 71
+
+    (28) opbooleano -> MENOR .
+
+    NUM             reduce using rule 28 (opbooleano -> MENOR .)
+    ID              reduce using rule 28 (opbooleano -> MENOR .)
+    APARENT         reduce using rule 28 (opbooleano -> MENOR .)
+
+
+state 72
+
+    (32) opbooleano -> IGUALIG .
+
+    NUM             reduce using rule 32 (opbooleano -> IGUALIG .)
+    ID              reduce using rule 32 (opbooleano -> IGUALIG .)
+    APARENT         reduce using rule 32 (opbooleano -> IGUALIG .)
+
+
+state 73
 
     (19) asignacionRet -> RESERVADOS ID IGUAL valor .
     (44) valor -> valor . oper valor
@@ -985,144 +1083,43 @@ state 63
     RESERVADOS      reduce using rule 19 (asignacionRet -> RESERVADOS ID IGUAL valor .)
     PUNTOCOMA       reduce using rule 19 (asignacionRet -> RESERVADOS ID IGUAL valor .)
     MAS             shift and go to state 45
-    MENOS           shift and go to state 44
-    POR             shift and go to state 48
-    DIVIDE          shift and go to state 47
-    MODULO          shift and go to state 46
+    MENOS           shift and go to state 47
+    POR             shift and go to state 44
+    DIVIDE          shift and go to state 46
+    MODULO          shift and go to state 43
 
-    oper                           shift and go to state 43
-
-state 64
-
-    (13) for -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA . paramFor3 CPARENT
-    (24) paramFor3 -> . ID MAS MAS
-    (25) paramFor3 -> . MAS MAS ID
-    (26) paramFor3 -> . MENOS MENOS ID
-    (27) paramFor3 -> . ID MENOS MENOS
-    (45) paramFor3 -> . ID
-
-    ID              shift and go to state 77
-    MAS             shift and go to state 76
-    MENOS           shift and go to state 74
-
-    paramFor3                      shift and go to state 75
-
-state 65
-
-    (32) opbooleano -> IGUALIG .
-
-    NUM             reduce using rule 32 (opbooleano -> IGUALIG .)
-    ID              reduce using rule 32 (opbooleano -> IGUALIG .)
-    APARENT         reduce using rule 32 (opbooleano -> IGUALIG .)
-
-
-state 66
-
-    (29) opbooleano -> MENORIG .
-
-    NUM             reduce using rule 29 (opbooleano -> MENORIG .)
-    ID              reduce using rule 29 (opbooleano -> MENORIG .)
-    APARENT         reduce using rule 29 (opbooleano -> MENORIG .)
-
-
-state 67
-
-    (28) opbooleano -> MENOR .
-
-    NUM             reduce using rule 28 (opbooleano -> MENOR .)
-    ID              reduce using rule 28 (opbooleano -> MENOR .)
-    APARENT         reduce using rule 28 (opbooleano -> MENOR .)
-
-
-state 68
-
-    (34) opbooleano -> AND .
-
-    NUM             reduce using rule 34 (opbooleano -> AND .)
-    ID              reduce using rule 34 (opbooleano -> AND .)
-    APARENT         reduce using rule 34 (opbooleano -> AND .)
-
-
-state 69
-
-    (23) comparacionRet -> valor opbooleano . valor
-    (41) valor -> . NUM
-    (42) valor -> . ID
-    (43) valor -> . APARENT valor CPARENT
-    (44) valor -> . valor oper valor
-
-    NUM             shift and go to state 26
-    ID              shift and go to state 27
-    APARENT         shift and go to state 28
-
-    valor                          shift and go to state 78
-
-state 70
-
-    (35) opbooleano -> OR .
-
-    NUM             reduce using rule 35 (opbooleano -> OR .)
-    ID              reduce using rule 35 (opbooleano -> OR .)
-    APARENT         reduce using rule 35 (opbooleano -> OR .)
-
-
-state 71
-
-    (33) opbooleano -> DIFERENTE .
-
-    NUM             reduce using rule 33 (opbooleano -> DIFERENTE .)
-    ID              reduce using rule 33 (opbooleano -> DIFERENTE .)
-    APARENT         reduce using rule 33 (opbooleano -> DIFERENTE .)
-
-
-state 72
-
-    (31) opbooleano -> MAYORIG .
-
-    NUM             reduce using rule 31 (opbooleano -> MAYORIG .)
-    ID              reduce using rule 31 (opbooleano -> MAYORIG .)
-    APARENT         reduce using rule 31 (opbooleano -> MAYORIG .)
-
-
-state 73
-
-    (30) opbooleano -> MAYOR .
-
-    NUM             reduce using rule 30 (opbooleano -> MAYOR .)
-    ID              reduce using rule 30 (opbooleano -> MAYOR .)
-    APARENT         reduce using rule 30 (opbooleano -> MAYOR .)
-
+    oper                           shift and go to state 48
 
 state 74
 
-    (26) paramFor3 -> MENOS . MENOS ID
+    (24) paramFor3 -> ID . MAS MAS
+    (27) paramFor3 -> ID . MENOS MENOS
+    (45) paramFor3 -> ID .
 
-    MENOS           shift and go to state 79
+    MAS             shift and go to state 79
+    MENOS           shift and go to state 80
+    CPARENT         reduce using rule 45 (paramFor3 -> ID .)
 
 
 state 75
 
-    (13) for -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 . CPARENT
+    (26) paramFor3 -> MENOS . MENOS ID
 
-    CPARENT         shift and go to state 80
+    MENOS           shift and go to state 81
 
 
 state 76
 
     (25) paramFor3 -> MAS . MAS ID
 
-    MAS             shift and go to state 81
+    MAS             shift and go to state 82
 
 
 state 77
 
-    (24) paramFor3 -> ID . MAS MAS
-    (27) paramFor3 -> ID . MENOS MENOS
-    (45) paramFor3 -> ID .
+    (13) for -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 . CPARENT
 
-    MAS             shift and go to state 83
-    MENOS           shift and go to state 82
-    CPARENT         reduce using rule 45 (paramFor3 -> ID .)
+    CPARENT         shift and go to state 83
 
 
 state 78
@@ -1137,81 +1134,81 @@ state 78
 
     PUNTOCOMA       reduce using rule 23 (comparacionRet -> valor opbooleano valor .)
     MAS             shift and go to state 45
-    MENOS           shift and go to state 44
-    POR             shift and go to state 48
-    DIVIDE          shift and go to state 47
-    MODULO          shift and go to state 46
+    MENOS           shift and go to state 47
+    POR             shift and go to state 44
+    DIVIDE          shift and go to state 46
+    MODULO          shift and go to state 43
 
-    oper                           shift and go to state 43
+    oper                           shift and go to state 48
 
 state 79
 
-    (26) paramFor3 -> MENOS MENOS . ID
+    (24) paramFor3 -> ID MAS . MAS
 
-    ID              shift and go to state 84
+    MAS             shift and go to state 84
 
 
 state 80
+
+    (27) paramFor3 -> ID MENOS . MENOS
+
+    MENOS           shift and go to state 85
+
+
+state 81
+
+    (26) paramFor3 -> MENOS MENOS . ID
+
+    ID              shift and go to state 86
+
+
+state 82
+
+    (25) paramFor3 -> MAS MAS . ID
+
+    ID              shift and go to state 87
+
+
+state 83
 
     (13) for -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT .
 
     ACORCH          reduce using rule 13 (for -> FOR APARENT paramFor1 PUNTOCOMA comparacionesRet PUNTOCOMA paramFor3 CPARENT .)
 
 
-state 81
-
-    (25) paramFor3 -> MAS MAS . ID
-
-    ID              shift and go to state 85
-
-
-state 82
-
-    (27) paramFor3 -> ID MENOS . MENOS
-
-    MENOS           shift and go to state 86
-
-
-state 83
-
-    (24) paramFor3 -> ID MAS . MAS
-
-    MAS             shift and go to state 87
-
-
 state 84
 
-    (26) paramFor3 -> MENOS MENOS ID .
+    (24) paramFor3 -> ID MAS MAS .
 
-    CPARENT         reduce using rule 26 (paramFor3 -> MENOS MENOS ID .)
+    CPARENT         reduce using rule 24 (paramFor3 -> ID MAS MAS .)
 
 
 state 85
-
-    (25) paramFor3 -> MAS MAS ID .
-
-    CPARENT         reduce using rule 25 (paramFor3 -> MAS MAS ID .)
-
-
-state 86
 
     (27) paramFor3 -> ID MENOS MENOS .
 
     CPARENT         reduce using rule 27 (paramFor3 -> ID MENOS MENOS .)
 
 
+state 86
+
+    (26) paramFor3 -> MENOS MENOS ID .
+
+    CPARENT         reduce using rule 26 (paramFor3 -> MENOS MENOS ID .)
+
+
 state 87
 
-    (24) paramFor3 -> ID MAS MAS .
+    (25) paramFor3 -> MAS MAS ID .
 
-    CPARENT         reduce using rule 24 (paramFor3 -> ID MAS MAS .)
+    CPARENT         reduce using rule 25 (paramFor3 -> MAS MAS ID .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for ID in state 6 resolved as shift
-WARNING: shift/reduce conflict for RESERVADOS in state 6 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 6 resolved as shift
+WARNING: shift/reduce conflict for ID in state 5 resolved as shift
+WARNING: shift/reduce conflict for RESERVADOS in state 5 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 5 resolved as shift
 WARNING: shift/reduce conflict for MAS in state 57 resolved as shift
 WARNING: shift/reduce conflict for MENOS in state 57 resolved as shift
 WARNING: shift/reduce conflict for POR in state 57 resolved as shift
