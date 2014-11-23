@@ -1,7 +1,6 @@
-cuentaTabs = ""
 tokens = ('INT','NUM','ID','FLOAT','DOUBLE','CHAR','COMA','MAS','MENOS','POR','DIVIDE','MODULO',
 	'IGUAL','IGUALIG','DIFERENTE','AND','OR','MAYOR','MAYORIG','MENOR','MENORIG',
-	'PUNTOCOMA','CCORCH','TAB','ACORCH','CPARENT','APARENT','RESERVADOS','FOR')
+	'PUNTOCOMA','CCORCH','ACORCH','CPARENT','APARENT','RESERVADOS','FOR')
 
 t_MAS    = r'\+'
 t_MENOS   = r'-'
@@ -29,6 +28,7 @@ def t_NUM(t):
 	r'\d+'
 	return t
 	
+
 def t_RESERVADOS (t):
 	r'int|double|float|char'
 	return t
@@ -36,13 +36,11 @@ def t_FOR (t):
 	r'for'
 	return t
 def t_ID (t):
-	r'[a-zA_Z][a-zA-Z0-9_]*'	
+	r'[a-zA-Z0-9_]+'	
+	return t
+	
 	return t
 t_COMA  = r'\,'
-def t_TAB(t):
-	r'[\t]'
-	#return t
-	#print ('\t', end ="")
 
 
 
@@ -55,7 +53,7 @@ def t_TAB(t):
     return t
 '''
 
-t_ignore = " "
+t_ignore = " \t"
 
 def t_newline(t):
     r'\n+'
@@ -93,41 +91,24 @@ def p_cuerpo(p):
 	| instrucciones instrucciones
 	| empty'''
 	
-#############INSTRUCCIONES#########Este presenta conflictos
+#############INSTRUCCIONES#########
 def p_instrucciones(p):
-	'''instrucciones : instruccion instrucciones 
-	| instruccioncuerpo instrucciones
-	| instruccion PUNTOCOMA 
-	| instruccioncuerpo'''
+	'''instrucciones : instruccion 
+	| instruccioncuerpo '''
 #############INSTRUCCION#########
-def p_instruccioncuerpo(p):# for, if ,while
-	'''instruccioncuerpo : for acorch cuerpo ccorch'''
-	print (cuentaTabs, end = "")
+def p_instruccioncuerpo(p):
+	'''instruccioncuerpo : for ACORCH cuerpo CCORCH'''
 	print ("}")
-
-def p_acorch(p):# for, if ,while
-	'acorch : ACORCH'
-	global cuentaTabs
-	cuentaTabs = cuentaTabs+"\t"
-	#print ('*'+cuentaTabs+'*')
-
-def p_ccorch(p):# for, if ,while
-	'ccorch : CCORCH'
-	global cuentaTabs
-	cuentaTabs = cuentaTabs[:-1]
-	#print ('*'+cuentaTabs+'*')
 	
-def p_instruccion(p): ### Asignaciones o funciones o metodos
+def p_instruccion(p):
 	'''instruccion : asignacion'''
 
 #############FOR#########
 #for (asignaciones;comparaciones;cambios) // Puede ser seguido de una linea donde no requiere {} y cuando es de mas de una linea si requiere {}
 def p_for(p):
 	'for : FOR APARENT	paramFor1	PUNTOCOMA	comparacionesRet	PUNTOCOMA	paramFor3	   CPARENT'
-	print (cuentaTabs, end = "")
 	print (p[3])
-	print (cuentaTabs, end = "")
-	print("Para",p[5],", ",p[7],"{")
+	print("Mientras,",p[5],", ",p[7],"{")
 	
 	
 ##########PARAMFOR1######
@@ -146,7 +127,7 @@ def p_parFor1(p):
 def p_asignacionesRet(p):
 	'''asignacionesRet : asignacionRet asignacionesRet
 	| asignacionRet'''
-	if (len(p) == 3): p[0] = p[1]+"\n"+cuentaTabs+p[2]
+	if (len(p) == 3): p[0] = p[1]+"\n"+p[2]
 	elif (len(p) == 2):  p[0] = p[1]
 
 #######ASIGNACION######## 
@@ -159,12 +140,8 @@ def p_asignacionRet(p):
 def p_asignacion(p):
 	'''asignacion : ID IGUAL valor
 	| RESERVADOS ID IGUAL valor''' 
-	if (len(p) == 4): 
-		print (cuentaTabs, end = "")
-		print (p[1]+"<-"+p[3] )
-	elif (len(p) == 5):  
-		print (cuentaTabs, end = "")
-		print (p[2]+"<-"+p[4] )
+	if (len(p) == 4): print (p[1]+"<-"+p[3] )
+	elif (len(p) == 5):  print (p[2]+"<-"+p[4] )
 	
 #######COMPARACIONES######## 
 # Recibe el primer parametro del for que puede ser asignaciones o vacia en caso de que las var a usar ya hayan sido declaradas
@@ -249,10 +226,7 @@ def p_ids(p):
 	p[0]=p[1]+p[3]
 	'''print ("imprimo desde ids 3")'''
 		
-def p_ids2(p):
-	'ids : ID'
-	'''print ("imprimo desde ids 1")'''
-	p[0] = p[1]
+
 
 
 '''
@@ -271,14 +245,6 @@ def p_empty(p):
 	p[0]=""
 	pass
 	
-def p_tab(p):
-	'''tab : TAB tab
-	| TAB
-	| '''
-	if (len(p) == 3): print ('\t')
-	elif (len(p)== 2) : print ('\t')
-	
-	
 def p_error(p):
     if p:
         print("Error de sintaxis en '%s'" % p.value)
@@ -288,12 +254,10 @@ def p_error(p):
 import ply.yacc as yacc
 yacc.yacc()
 
-f = open('pruebasParaBreteFinal.txt', 'r')
-print (f.read())
-print ('\n')
-f.seek(0)
-#while 1:
-	#s = input('> ')
-s = f.read()
-
-yacc.parse(s)
+while 1:
+    try:
+        s = input('> ')
+    except EOFError:
+        break
+    if not s: continue
+    yacc.parse(s)
