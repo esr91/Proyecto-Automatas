@@ -1,7 +1,7 @@
 cuentaTabs = ""
 tokens = ('INT','NUM','ID','FLOAT','DOUBLE','CHAR','COMA','MAS','MENOS','POR','DIVIDE','MODULO',
 	'IGUAL','IGUALIG','DIFERENTE','AND','OR','MAYOR','MAYORIG','MENOR','MENORIG',
-	'PUNTOCOMA','CCORCH','TAB','ACORCH','CPARENT','APARENT','RESERVADOS','FOR')
+	'PUNTOCOMA','CCORCH','TAB','ACORCH','CPARENT','APARENT','RESERVADOS','FOR','IF')
 
 t_MAS    = r'\+'
 t_MENOS   = r'-'
@@ -34,6 +34,9 @@ def t_RESERVADOS (t):
 	return t
 def t_FOR (t):
 	r'for'
+	return t
+def t_IF (t):
+	r'if'
 	return t
 def t_ID (t):
 	r'[a-zA_Z][a-zA-Z0-9_]*'	
@@ -102,11 +105,12 @@ def p_cuerpo(p):
 def p_instrucciones(p):
 	'''instrucciones : instruccion instrucciones 
 	| instruccioncuerpo instrucciones
-	| instruccion PUNTOCOMA 
+	| instruccion
 	| instruccioncuerpo'''
 #############INSTRUCCION#########
 def p_instruccioncuerpo(p):# for, if ,while
-	'''instruccioncuerpo : for acorch cuerpo ccorch'''
+	'''instruccioncuerpo : for acorch cuerpo ccorch
+	| if acorch cuerpo ccorch'''
 	printNuestro ("}")
 
 def p_acorch(p):# for, if ,while
@@ -122,7 +126,16 @@ def p_ccorch(p):# for, if ,while
 	#printNuestro ('*'+cuentaTabs+'*')
 	
 def p_instruccion(p): ### Asignaciones o funciones o metodos
-	'''instruccion : asignacion'''
+	'''instruccion : asignacion PUNTOCOMA '''
+	
+
+
+#############IF#########
+def p_if(p):
+	'if : IF APARENT comparacionRet CPARENT'
+	printNuestro("Si "+p[3]+"{")
+
+
 
 #############FOR#########
 #for (asignaciones;comparaciones;cambios) // Puede ser seguido de una linea donde no requiere {} y cuando es de mas de una linea si requiere {}
@@ -289,7 +302,7 @@ import ply.yacc as yacc
 yacc.yacc()
 
 f = open('pruebasParaBreteFinal.txt', 'r')
-print (f.read())
+#print (f.read())
 print ('\n')
 f.seek(0)
 #while 1:
