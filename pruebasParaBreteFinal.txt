@@ -1,24 +1,90 @@
-for( a=64 y=o ;a<=10;++o){for(j=1;j<4;j--){b=10; c=9;}}
+void metodo1(){
+	for( a=64 y=o ;a<=10;++o){for(j=1;j<4;j--){b=10; c=9;}}
 
-for(j=1 p=t i=o;j<4;j--){
-	b=10; 
-	c=9;
-	if(c >3){
-		bien =1;
+	for(j=1 p=t i=o;j<4;j--){
+		b=10; 
+		c=9;
+		if(c >3){
+			bien =1;
+		}
 	}
 }
 
-
-a=b;
-if(t<=1){
-	for( a=64 y=o ;a<=10;++o){
-		for(j=1 p=t i=o;j<4;j--){
-			b=10; 
-			c=9;
-			if(c >3){
-				bien =1;
-				si = 2;
+double metodo2(){
+	a=b;
+	if(!(t<=1)){
+		if(!met()){
+			print(algui,4,4);
+			for( a=64 y=o ;a<=10;++o){
+				for(j=1 p=t i=o;j<4;j--){
+					b=10; 
+					c=9;
+					while ( ( (c>=d) && (a>b)	) || (x<a) ){
+						o--;
+						--o;
+						a++;
+						zeta = ++a;
+						si = 2;
+					}
+				}
 			}
 		}
 	}
 }
+
+int met::metodo3(a,b,c){
+	if(!Pertenece(elElemento)) {
+		NodoCP * nuevo = new NodoCP(elElemento);
+		//si esta vacia
+		if (Vacia()) {
+			 primero->s = ultimo->a->b.algo;
+		}else{
+			//es menor que el primero
+			if (elElemento < primero->elemento) {
+				nuevo->siguiente = primero;
+				primero = nuevo;
+			}else {
+					//es mayor que el ultimo
+					if (elElemento > ultimo->elemento) {
+						ultimo->siguiente = nuevo;
+						ultimo = nuevo;
+					} else { // elemento > primero && elemento < ultimo
+						NodoCP * iter = primero;
+						while (iter->siguiente->elemento < elElemento) {
+							iter = iter->siguiente;
+						}
+						nuevo->siguiente = iter->siguiente;
+						iter->siguiente = nuevo;
+					}
+				}
+		}
+	}
+
+
+
+
+		int num = primero->elemento;
+		primero = primero->siguiente;
+		return num;
+		
+		
+			NodoCP *temp = primero;
+		while(temp != NULL && temp->elemento != elElemento ) {
+			temp = temp->siguiente;
+		}
+		return temp;
+}	
+void ColaPrioridad_LO::Mostrar() {	
+	if (!Vacia()) {
+        NodoCP *p1 = primero;
+        while (p1->siguiente!= NULL) {
+            //cout << p1->elemento << " - ";
+            p1 = p1->siguiente;
+        }
+        //cout << p1->elemento << ".\n";
+    } else {
+        //cout << "No hay elementos en la lista\n";
+    }
+}
+
+
