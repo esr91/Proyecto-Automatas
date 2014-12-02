@@ -2,7 +2,7 @@ cuentaTabs = ""
 varMetRet = 0
 tokens = ('INT','NO','NUM','ID','FLOAT','DOUBLE','CHAR','COMA','MAS','MENOS','POR','DIVIDE','MODULO',
 	'IGUAL','IGUALIG','DIFERENTE','AND','OR','MAYOR','MAYORIG','MENOR','MENORIG',
-	'PUNTOCOMA','DOBLEDOSPUNTOS','RETURN','ELSE','COMENTARIOS1','COMENTARIOS2','CCORCH','ACORCH','CPARENT','APARENT','RESERVADOS','FOR','IF','WHILE')
+	'PUNTOCOMA','DOBLEDOSPUNTOS','RETURN','ELSE','COMENTARIOS1','COMENTARIOS2','CCORCH','ACORCH','CPARENT','APARENT','RESERVADOS','FOR','IF','WHILE','COUT','CIN','INCLUDE','DOBMAYOR','DOBMENOR','CIERRACMNT','STRING')
 
 t_MAS    = r'\+'
 t_MENOS   = r'-'
@@ -25,6 +25,8 @@ t_AND= r'&&'
 t_OR= r'\|\|'
 t_NO= r'!'
 t_COMA= r'\,'
+t_DOBMENOR = r'\<\<'
+t_DOBMAYOR = r'\>\>'
 t_DOBLEDOSPUNTOS = r'::'
 
 
@@ -32,10 +34,23 @@ t_DOBLEDOSPUNTOS = r'::'
 def t_NUM(t):
 	r'\d+'
 	return t
+def t_STRING(t):
+	r'\"[^\"]*\"'
+	return t
+def t_INCLUDE(t):
+	r'\#include[<"][a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z0-9]+)*[>"]'
 def t_RETURN(t):
 	r'return'
 	return t
+def t_CIERRACMNT(t):
+	r'\*/'
+def t_COMENTARIOS1(t):
+	r'/\*[^CIERRACMNT]*\*/'
+	print(t)
 	
+def t_COMENTARIOS2(t):
+	r'//[^\n]+'
+	#print (t)
 def t_RESERVADOS (t):
 	r'int|double|float|char|void'
 	return t
@@ -51,15 +66,17 @@ def t_IF (t):
 def t_ELSE (t):
 	r'else'
 	return t
+def t_COUT (t):
+	r'cout'
+	return t
+def t_CIN (t):
+	r'cin'
+	return t
 def t_ID (t):
 	r'[a-zA-Z][a-zA-Z0-9_]*(((->)|\.)*[a-zA-Z][a-zA-Z0-9_]*)*'
 	return t
 def t_TAB(t):
 	r'[\t]'
-def t_COMENTARIOS1(t):
-	r'\/\*[^[\*\/]]*\*\/'
-def t_COMENTARIOS2(t):
-	r'\/\/[^\n]+'
 	
 def printNuestro(t):
 	print (cuentaTabs, end = "")
@@ -154,7 +171,27 @@ def p_instruccion(p): ### Asignaciones o funciones o metodos
 	'''instruccion : asignacion PUNTOCOMA 
 	| incredecremnto PUNTOCOMA
 	| return PUNTOCOMA
-	| metodo PUNTOCOMA'''
+	| metodo PUNTOCOMA
+	| cout PUNTOCOMA
+	| cin PUNTOCOMA'''
+	
+def p_cin(p):
+	'cin : CIN DOBMAYOR ID'
+	print (cuentaTabs, end = "")
+	print ("CIN A PSEUDO ESTA MUY  DIFICIL... NO LO USE")
+	
+def p_cout(p):
+	'cout : COUT restocout'
+	print (cuentaTabs, end = "")
+	print ("Impimir:"+p[2])
+	
+def p_restocoout(p):
+	'''restocout : DOBMENOR STRING
+	| DOBMENOR STRING restocout'''
+	if(len(p)==3): p[0] = p[2]
+	else: p[0] = p[2]+ " "+p[3]
+	
+
 	
 	
 
